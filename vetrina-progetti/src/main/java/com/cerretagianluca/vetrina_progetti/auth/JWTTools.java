@@ -10,7 +10,7 @@ import java.util.UUID;
 
 @Component
 public class JWTTools {
-    @Value("spring.jwt.secret")
+    @Value("${spring.jwt.secret}")
     String secret;
 
     public void verifyToken(String token) {
