@@ -4,6 +4,7 @@ import com.cerretagianluca.vetrina_progetti.auth.JWTTools;
 import com.cerretagianluca.vetrina_progetti.dtos.LoginDTO;
 import com.cerretagianluca.vetrina_progetti.dtos.SignupDTO;
 import com.cerretagianluca.vetrina_progetti.entites.UserEntity;
+import com.cerretagianluca.vetrina_progetti.responses.LoginResponseDto;
 import com.cerretagianluca.vetrina_progetti.services.UserService;
 import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,11 +28,11 @@ public class UserController {
     private PasswordEncoder encoder;
 
     @PostMapping("/login")
-    public String login(@RequestBody LoginDTO body, @AuthenticationPrincipal UserEntity me) throws BadRequestException {
+    public LoginResponseDto login(@RequestBody LoginDTO body, @AuthenticationPrincipal UserEntity me) throws BadRequestException {
         UserEntity user = this.userService.findByEmail(body.email());
 
         if (encoder.matches(body.password(), user.getPassword())) {
-            return jwtTools.createToken(user.getId());
+            return new LoginResponseDto(jwtTools.createToken(user.getId()), userService.getNameByEmail(body.email()));
         } else {
             throw new BadRequestException("Password sbagliata!");
         }
