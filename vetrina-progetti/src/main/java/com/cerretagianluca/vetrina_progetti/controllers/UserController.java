@@ -4,6 +4,7 @@ import com.cerretagianluca.vetrina_progetti.auth.JWTTools;
 import com.cerretagianluca.vetrina_progetti.dtos.LoginDTO;
 import com.cerretagianluca.vetrina_progetti.dtos.SignupDTO;
 import com.cerretagianluca.vetrina_progetti.entites.UserEntity;
+import com.cerretagianluca.vetrina_progetti.enums.Roles;
 import com.cerretagianluca.vetrina_progetti.responses.LoginResponseDto;
 import com.cerretagianluca.vetrina_progetti.services.UserService;
 import org.apache.coyote.BadRequestException;
@@ -40,7 +41,7 @@ public class UserController {
 
     @PostMapping("/signup")
     public UserEntity signup(@RequestBody SignupDTO body) throws BadRequestException {
-        UserEntity user = new UserEntity(body.name(), body.username(), body.email(), encoder.encode(body.password()));
+        UserEntity user = new UserEntity(body.name(), body.email(), encoder.encode(body.password()), Roles.USER);
         return this.userService.create(user);
     }
 }

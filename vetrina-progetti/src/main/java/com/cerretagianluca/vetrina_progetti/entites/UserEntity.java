@@ -22,7 +22,6 @@ public class UserEntity implements UserDetails {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     private String name;
-    private String username;
     private String email;
     private String password;
 
@@ -30,11 +29,11 @@ public class UserEntity implements UserDetails {
     @JsonProperty("role")
     private Roles role;
 
-    public UserEntity(String name, String username, String email, String password) {
+    public UserEntity(String name, String email, String password, Roles role) {
         this.name = name;
-        this.username = username;
         this.email = email;
         this.password = password;
+        this.role = role;
     }
 
     // Costruttore senza argomenti
@@ -54,6 +53,7 @@ public class UserEntity implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.username;
+        return this.email;
     }
+
 }

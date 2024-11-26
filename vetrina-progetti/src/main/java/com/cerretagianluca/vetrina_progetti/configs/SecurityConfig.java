@@ -1,12 +1,12 @@
 package com.cerretagianluca.vetrina_progetti.configs;
 
-
 import com.cerretagianluca.vetrina_progetti.auth.AuthFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -21,8 +21,6 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
 import java.util.Arrays;
-
-// ... altri import
 
 @Configuration
 @EnableWebSecurity
@@ -66,9 +64,11 @@ public class SecurityConfig {
                 // Disabilita form login
                 .formLogin(AbstractHttpConfigurer::disable)
                 // Configura la gestione della sessione
-                .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 // Aggiungi il filtro di autenticazione
-                .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class)
+                // Abilita CORS
+                .cors(Customizer.withDefaults());
 
         return http.build();
     }
