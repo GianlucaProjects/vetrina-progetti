@@ -26,7 +26,7 @@ public class AuthController {
 
     @PostMapping("/login")
     public UserLoginResponseDTO login(@RequestBody UserLoginDTO body) {
-        return new UserLoginResponseDTO(this.authService.checkCredentialsAndGenerateToken(body));
+        return this.authService.checkCredentialsAndGenerateToken(body);
     }
 
     @PostMapping("/register")

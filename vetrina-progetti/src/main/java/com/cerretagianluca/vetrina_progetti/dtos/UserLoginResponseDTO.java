@@ -1,4 +1,4 @@
 package com.cerretagianluca.vetrina_progetti.dtos;
 
-public record UserLoginResponseDTO(String accessToken) {
+public record UserLoginResponseDTO(String accessToken, String name) {
 }

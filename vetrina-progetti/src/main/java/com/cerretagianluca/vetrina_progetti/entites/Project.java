@@ -9,7 +9,7 @@ import java.util.UUID;
 @Entity
 @Data
 @Table(name = "projects")
-public class ProjectEntity {
+public class Project {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -21,13 +21,13 @@ public class ProjectEntity {
     @ElementCollection
     private List<String> images;
 
-    public ProjectEntity(String title, String description, String category, List<String> images) {
+    public Project(String title, String description, String category, List<String> images) {
         this.title = title;
         this.description = description;
         this.category = category;
         this.images = images;
     }
 
-    public ProjectEntity() {
+    public Project() {
     }
 }

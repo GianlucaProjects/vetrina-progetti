@@ -1,5 +1,6 @@
 package com.cerretagianluca.vetrina_progetti.security;
 
+import com.cloudinary.Cloudinary;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -15,7 +16,9 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Configuration
 @EnableWebSecurity
@@ -46,6 +49,15 @@ public class SecurityConfig {
     @Bean
     PasswordEncoder getBCrypt() {
         return new BCryptPasswordEncoder(12);
+    }
+
+    @Bean
+    public Cloudinary uploader() {
+        Map<String, String> config = new HashMap<>();
+        config.put("cloud_name", "dagdzx0kg");
+        config.put("api_key", "dagdzx0kg");
+        config.put("api_secret", "h_h799eBI11ZzMRHgVL4verC-m4");
+        return new Cloudinary(config);
     }
 
     @Bean

@@ -2,6 +2,7 @@ package com.cerretagianluca.vetrina_progetti.services;
 
 
 import com.cerretagianluca.vetrina_progetti.dtos.UserLoginDTO;
+import com.cerretagianluca.vetrina_progetti.dtos.UserLoginResponseDTO;
 import com.cerretagianluca.vetrina_progetti.entites.User;
 import com.cerretagianluca.vetrina_progetti.exceptions.UnauthorizedException;
 import com.cerretagianluca.vetrina_progetti.tools.JWT;
@@ -21,7 +22,7 @@ public class AuthService {
     @Autowired
     private PasswordEncoder bcrypt;
 
-    public String checkCredentialsAndGenerateToken(UserLoginDTO body) {
+    public UserLoginResponseDTO checkCredentialsAndGenerateToken(UserLoginDTO body) {
         // 1. Controllo le credenziali
         // 1.1 Cerco nel DB se esiste un utente con l'email fornita
         User found = this.usersService.findByEmail(body.email());
@@ -30,7 +31,7 @@ public class AuthService {
             // 2. Se sono OK --> Genero il token
             String accessToken = jwt.createToken(found);
             // 3. Ritorno il token
-            return accessToken;
+            return new UserLoginResponseDTO(accessToken, found.getName());
         } else {
             // 4. Se le credenziali sono errate --> 401 (Unauthorized)
             throw new UnauthorizedException("Credenziali errate!");
