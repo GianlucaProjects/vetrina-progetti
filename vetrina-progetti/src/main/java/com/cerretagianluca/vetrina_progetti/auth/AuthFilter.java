@@ -1,7 +1,7 @@
 package com.cerretagianluca.vetrina_progetti.auth;
 
-import com.cerretagianluca.vetrina_progetti.entites.UserEntity;
-import com.cerretagianluca.vetrina_progetti.services.UserService;
+import com.cerretagianluca.vetrina_progetti.entites.User;
+import com.cerretagianluca.vetrina_progetti.services.UsersService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,7 +23,7 @@ public class AuthFilter extends OncePerRequestFilter {
     JWTTools jwt;
 
     @Autowired
-    UserService userService;
+    UsersService userService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -38,7 +38,7 @@ public class AuthFilter extends OncePerRequestFilter {
 
         String id = jwt.decodeToken(token);
 
-        UserEntity user = this.userService.findById(UUID.fromString(id));
+        User user = this.userService.findById(UUID.fromString(id));
 
         Authentication auth = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(auth);
