@@ -25,31 +25,31 @@ public class ExceptionsHandler {
     // Tra le parentesi indico quale eccezione dovrà essere gestita da questo metodo
     @ResponseStatus(HttpStatus.BAD_REQUEST) // 400
     public ErrorsResponseDTO handleBadrequest(BadRequestException ex) {
-        return new ErrorsResponseDTO(ex.getMessage(), LocalDateTime.now());
+        return new ErrorsResponseDTO(ex.getMessage(), LocalDateTime.now(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(UnauthorizedException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED) // 401
     public ErrorsResponseDTO handleUnauthorized(UnauthorizedException ex) {
-        return new ErrorsResponseDTO(ex.getMessage(), LocalDateTime.now());
+        return new ErrorsResponseDTO(ex.getMessage(), LocalDateTime.now(), HttpStatus.UNAUTHORIZED);
     }
 
     @ExceptionHandler(AuthorizationDeniedException.class)
     @ResponseStatus(HttpStatus.FORBIDDEN) // 403
     public ErrorsResponseDTO handleForbidden(AuthorizationDeniedException ex) {
-        return new ErrorsResponseDTO("Non hai i permessi per accedere", LocalDateTime.now());
+        return new ErrorsResponseDTO("Non hai i permessi per accedere", LocalDateTime.now(), HttpStatus.FORBIDDEN);
     }
 
     @ExceptionHandler(NotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND) // 404
     public ErrorsResponseDTO handleNotFound(NotFoundException ex) {
-        return new ErrorsResponseDTO(ex.getMessage(), LocalDateTime.now());
+        return new ErrorsResponseDTO(ex.getMessage(), LocalDateTime.now(), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR) // 500
     public ErrorsResponseDTO handleGeneric(Exception ex) {
         ex.printStackTrace(); // Non dimentichiamoci che è estremamente utile sapere dove è stata generata un'eccezione per poterla facilmente fixare
-        return new ErrorsResponseDTO("Problema lato server! Giuro che risolveremo presto!", LocalDateTime.now());
+        return new ErrorsResponseDTO("Problema lato server! Giuro che risolveremo presto!", LocalDateTime.now(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

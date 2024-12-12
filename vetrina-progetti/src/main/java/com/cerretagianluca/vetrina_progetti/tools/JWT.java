@@ -18,7 +18,7 @@ public class JWT {
         // La classe Jwts ha principalmente due metodi: builder() e parser(), rispettivamente serviranno per creare e verificare i token
         return Jwts.builder()
                 .issuedAt(new Date(System.currentTimeMillis())) // Data di emissione del Token (IAT - Issued At), va messa in millisecondi
-                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 7)) // Data di scadenza del Token (Expiration Date), anche questa in millisecondi
+                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 10)) // Data di scadenza del Token (Expiration Date), anche questa in millisecondi
                 .subject(String.valueOf(user.getId())) // Subject, ovvero a chi appartiene il token <-- N.B. NON METTERE DATI SENSIBILI QUA DENTRO!!
                 .signWith(Keys.hmacShaKeyFor(secret.getBytes())) // Firmo il token, per poterlo fare devo utilizzare un algoritmo specifico HMAC e un segreto
                 .compact(); // Assemblo il tutto nella stringa finale che sarà il mio token

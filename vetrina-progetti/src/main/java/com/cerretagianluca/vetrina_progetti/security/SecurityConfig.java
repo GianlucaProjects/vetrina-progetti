@@ -55,7 +55,7 @@ public class SecurityConfig {
     public Cloudinary uploader() {
         Map<String, String> config = new HashMap<>();
         config.put("cloud_name", "dagdzx0kg");
-        config.put("api_key", "dagdzx0kg");
+        config.put("api_key", "618431312363118");
         config.put("api_secret", "h_h799eBI11ZzMRHgVL4verC-m4");
         return new Cloudinary(config);
     }

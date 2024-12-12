@@ -33,25 +33,28 @@ public class ProjectService {
     private UsersRepository usersRepository;
 
     public Project create(ProjectDTO projectDTO) {
-        if (projectDTO.image() != null) {
-            String url = null;
+        String imageUrl = null;
+
+        if (projectDTO.image() != null && !projectDTO.image().isEmpty()) {
             try {
-                url = (String) cloudinaryUploader.uploader().upload(projectDTO.image().getBytes(), ObjectUtils.emptyMap()).get("url");
+                imageUrl = (String) cloudinaryUploader.uploader()
+                        .upload(projectDTO.image().getBytes(), ObjectUtils.emptyMap())
+                        .get("url");
             } catch (IOException e) {
                 throw new BadRequestException("Ci sono stati problemi con l'upload del file!");
             }
-            // ... qua poi dovrei prendere l'url e salvarlo nel rispettivo utente o progetto (o altro)
-
-
-            Project project = new Project(projectDTO.title(), projectDTO.description(), projectDTO.category(), List.of(url));
-
-            return projectRepository.save(project);
         }
-        Project project = new Project(projectDTO.title(), projectDTO.description(), projectDTO.category(), new ArrayList<>());
+
+        Project project = new Project(
+                projectDTO.title(),
+                projectDTO.description(),
+                projectDTO.category(),
+                imageUrl != null ? List.of(imageUrl) : new ArrayList<>()
+        );
 
         return projectRepository.save(project);
-
     }
+
 
     public Page<Project> findAll(int page, int size, String sortBy) {
         if (size > 100) {
