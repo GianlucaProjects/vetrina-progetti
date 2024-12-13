@@ -5,7 +5,6 @@ import com.cerretagianluca.vetrina_progetti.entites.Project;
 import com.cerretagianluca.vetrina_progetti.exceptions.BadRequestException;
 import com.cerretagianluca.vetrina_progetti.exceptions.NotFoundException;
 import com.cerretagianluca.vetrina_progetti.repositories.ProjectRepository;
-import com.cerretagianluca.vetrina_progetti.repositories.UsersRepository;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +27,7 @@ public class ProjectService {
 
     @Autowired
     private Cloudinary cloudinaryUploader;
-
-    @Autowired
-    private UsersRepository usersRepository;
+    
 
     public Project create(ProjectDTO projectDTO) {
         String imageUrl = null;
